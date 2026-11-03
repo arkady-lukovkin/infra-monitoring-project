@@ -1,0 +1,21 @@
+{
+  "analyze_logs": {
+    "command": [
+      "./analyze_logs.sh"
+    ],
+    "exit_code": 0,
+    "stdout": "Файл: access.log\nВсего запросов: 300\nТоп-3 IP (количество, адрес):\n 120 192.168.1.10\n  90 10.0.0.5\n  60 192.168.1.20\nОтветы 4xx: 90\nОтветы 5xx: 30\n",
+    "stderr": ""
+  },
+  "bash_syntax": {
+    "command": [
+      "bash",
+      "-n",
+      "check_api.sh",
+      "analyze_logs.sh"
+    ],
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": ""
+  }
+}

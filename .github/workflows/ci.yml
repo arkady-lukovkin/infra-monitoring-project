@@ -1,0 +1,28 @@
+name: Monitoring checks
+
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  bash-checks:
+    name: Bash syntax and API
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - name: Check Bash syntax
+        run: |
+          bash -n check_api.sh
+          bash -n analyze_logs.sh
+      - name: Check public API
+        run: ./check_api.sh https://httpbin.org/status/200
+      - name: Analyze generated log
+        run: ./analyze_logs.sh
+
