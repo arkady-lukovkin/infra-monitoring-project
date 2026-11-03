@@ -1,0 +1,25 @@
+services:
+  api:
+    image: hashicorp/http-echo:1.0.0
+    command: ["-listen=:8080", "-text=Monitoring Service Active"]
+    expose:
+      - "8080"
+    networks:
+      - monitoring
+  proxy:
+    image: nginx:alpine
+    ports:
+      - "127.0.0.1:80:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
+    depends_on:
+      - api
+    networks:
+      - frontend
+      - monitoring
+
+networks:
+  monitoring:
+    internal: true
+  frontend:
+
