@@ -1,0 +1,10 @@
+35	172.26.0.2	18.227.178.96	httpbin.org	Client Hello (SNI=httpbin.org)
+39	18.227.178.96	172.26.0.2		Server Hello, Change Cipher Spec
+41	18.227.178.96	172.26.0.2		Application Data
+43	172.26.0.2	18.227.178.96		Change Cipher Spec, Application Data
+45	172.26.0.2	18.227.178.96		Application Data
+46	172.26.0.2	18.227.178.96		Application Data
+48	18.227.178.96	172.26.0.2		Application Data, Application Data
+49	172.26.0.2	18.227.178.96		Application Data
+50	172.26.0.2	18.227.178.96		Application Data
+51	172.26.0.2	18.227.178.96		Application Data

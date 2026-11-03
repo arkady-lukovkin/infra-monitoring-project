@@ -1,0 +1,30 @@
+[
+  {
+    "method": "GET",
+    "url": "http://httpbin.org/get",
+    "curl_exit": 0,
+    "status": "200",
+    "error": ""
+  },
+  {
+    "method": "POST",
+    "url": "http://httpbin.org/post",
+    "curl_exit": 0,
+    "status": "200",
+    "error": ""
+  },
+  {
+    "method": "GET",
+    "url": "http://httpbin.org/status/404",
+    "curl_exit": 0,
+    "status": "404",
+    "error": ""
+  },
+  {
+    "method": "GET",
+    "url": "https://httpbin.org/get",
+    "curl_exit": 0,
+    "status": "200",
+    "error": ""
+  }
+]

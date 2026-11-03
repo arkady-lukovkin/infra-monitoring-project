@@ -52,6 +52,27 @@ echo $?
 
 Разработка ведётся в `feature/monitoring`; изменения передаются в `main` через Pull Request. Workflow `.github/workflows/ci.yml` запускается при открытии и обновлении PR в `main`. Он выполняет `bash -n` для обоих скриптов, вызывает `check_api.sh https://httpbin.org/status/200` и проверяет запуск анализа логов. Недоступность внешнего httpbin приводит к ошибке проверки, а не к ложному успешному результату.
 
+## Захват трафика
+
+Дамп `traffic/monitoring-api.pcapng` содержит 58 настоящих пакетов. Захват выполнен tcpdump на интерфейсе `any` отдельного учебного контейнера `proxy`, затем преобразован `editcap` в pcapng без изменения пакетов. На macOS права захвата BPF не изменялись. Для просмотра использован Wireshark 4.4.19.
+
+В HTTP-фильтре видны три пары запросов и ответов: `GET /get` → 200, `POST /post` → 200 и `GET /status/404` → 404. Клиент — `172.26.0.2`, сервер httpbin.org в момент проверки — `18.227.178.96`. Отдельный HTTPS-запрос виден через фильтр `tls`: SNI `httpbin.org`, далее зашифрованные данные. Его метод и HTTP-код не читаются из зашифрованных пакетов; команда curl отдельно зафиксировала GET и 200. Результаты команд и скриншоты находятся в `report/`.
+
+Повторить захват в лабораторном контейнере можно так; команды выполняются в разных терминалах:
+
+```bash
+docker compose exec proxy apk add --no-cache curl tcpdump
+docker compose exec proxy tcpdump -p -i any -U -s 0 -w /tmp/monitoring-api.pcap 'tcp port 80 or tcp port 443'
+# Во втором терминале
+docker compose exec proxy curl http://httpbin.org/get
+docker compose exec proxy curl --data 'purpose=course-lab' http://httpbin.org/post
+docker compose exec proxy curl http://httpbin.org/status/404
+docker compose exec proxy curl https://httpbin.org/get
+# Завершить tcpdump через Ctrl+C, затем скопировать и преобразовать файл
+docker compose cp proxy:/tmp/monitoring-api.pcap /tmp/monitoring-api.pcap
+editcap -F pcapng /tmp/monitoring-api.pcap traffic/monitoring-api.pcapng
+```
+
 ## Передача на сервер по SSH
 
 Ниже пример деплоя, а не заявление о выполненном развёртывании на удалённом сервере. `deploy@server.example` нужно заменить адресом своего сервера. На нём должны быть Docker, Compose и свободный порт 80.

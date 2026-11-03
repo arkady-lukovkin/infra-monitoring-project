@@ -1,0 +1,3 @@
+bash -n check_api.sh analyze_logs.sh
+
+exit=0
