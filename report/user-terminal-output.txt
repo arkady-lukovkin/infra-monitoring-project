@@ -1,0 +1,31 @@
+Источник: вывод команды, присланный пользователем 03.11.2026
+
+Анализ учебного access.log
+Файл: access.log
+Всего запросов: 300
+Топ-3 IP (количество, адрес):
+ 120 192.168.1.10
+  90 10.0.0.5
+  60 192.168.1.20
+Ответы 4xx: 90
+Ответы 5xx: 30
+
+Проверка HTTP 200
+API доступен
+Код возврата: 0
+
+Проверка HTTP 404
+API недоступен, код ответа: 404
+Код возврата: 1
+
+Недоступный адрес
+curl: (7) Failed to connect to 127.0.0.1 port 1 after 0 ms: Couldn't connect to server
+API недоступен, код ответа: 000
+Код возврата: 1
+
+Состояние контейнеров
+infra-monitoring-project-api-1 hashicorp/http-echo:1.0.0 Up 14 minutes
+infra-monitoring-project-proxy-1 nginx:alpine Up 14 minutes 127.0.0.1:80->80/tcp
+
+Ответ nginx
+Monitoring Service Active
