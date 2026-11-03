@@ -50,7 +50,7 @@ echo $?
 
 ## Git и CI
 
-Разработка ведётся в `feature/monitoring`; изменения передаются в `main` через Pull Request. Workflow `.github/workflows/ci.yml` запускается при открытии и обновлении PR в `main`. Он выполняет `bash -n` для обоих скриптов, вызывает `check_api.sh https://httpbin.org/status/200` и проверяет запуск анализа логов. Недоступность внешнего httpbin приводит к ошибке проверки, а не к ложному успешному результату.
+Разработка ведётся в `feature/monitoring`, изменения передаются в `main` через Pull Request. Для `main` включена защита: перед слиянием должна пройти проверка `Bash syntax and API`. Workflow `.github/workflows/ci.yml` запускается при открытии и обновлении PR. Он выполняет `bash -n` для обоих скриптов, вызывает `check_api.sh https://httpbin.org/status/200` и запускает анализ логов. Если внешний httpbin недоступен, проверка завершается с ошибкой.
 
 ## Захват трафика
 
@@ -75,7 +75,7 @@ editcap -F pcapng /tmp/monitoring-api.pcap traffic/monitoring-api.pcapng
 
 ## Передача на сервер по SSH
 
-Ниже пример деплоя, а не заявление о выполненном развёртывании на удалённом сервере. `deploy@server.example` нужно заменить адресом своего сервера. На нём должны быть Docker, Compose и свободный порт 80.
+Ниже приведены команды для передачи проекта на сервер. Удалённый деплой в этой работе не выполнялся. `deploy@server.example` нужно заменить адресом своего сервера. На нём должны быть Docker, Compose и свободный порт 80.
 
 ```bash
 ssh-keygen -t ed25519 -f ~/.ssh/infra_monitoring -C "infra-monitoring"
